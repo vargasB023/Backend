@@ -3,7 +3,7 @@ import { body, param } from 'express-validator';
 import { Entrenador_controller } from '../controllers/entrenador_Controller';
 import { validar_Entrenador_Email_Existente, validar_Entrenador_Existente,validar_Entrenador_Por_Id,validar_Entrenador_body } from '../middelware/entrenador_Mild';
 import { handleInputErrors } from '../middelware/Validation';
-import upload from '../middelware/upload';
+
 
 const router = Router()
 
