@@ -43,11 +43,12 @@ export class plan_Entrenamiento_Controller {
     }
   }
 
-  static relacion_plan_microciclo = async (req: Request, res: Response) => {
+  static asignar_microciclo = async (req: Request, res: Response) => {
+    console.log("Holi", req.body);
     try {
-      const { ID_Plan_Entrenamiento, ID_Microciclo } = req.body;
+      const { ID_Plan, ID_Microciclo } = req.body;
 
-      const plan = await plan_De_Entrenamiento.findByPk(ID_Plan_Entrenamiento);
+      const plan = await plan_De_Entrenamiento.findByPk(ID_Plan);
       if (!plan) {
         return res.status(404).json({ error: 'Plan de entrenamiento no encontrado' });
       }

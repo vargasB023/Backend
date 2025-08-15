@@ -3,6 +3,7 @@ import colors from 'colors';
 import morgan from 'morgan';
 import {db} from './Config/db';
 import cors from 'cors'
+import indexRouter from './router_index';
 import entrenador_Router from './router/entrenador_Router'
 import perfil_Entrenador_Router from './router/perfil_Entrenador_Router'
 import deportista_Router from './router/deportista_Router'
@@ -61,8 +62,7 @@ app.use(fileUpload({
 app.use(morgan('dev'))
 app.use(express.json())
 
-
-
+app.use('/api', indexRouter);
 app.use('/api/entrenador', entrenador_Router)
 app.use('/api/perfil_entrenador',perfil_Entrenador_Router)
 app.use('/api/deportista', deportista_Router)

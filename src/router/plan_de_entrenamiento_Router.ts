@@ -24,11 +24,8 @@ router.post('/',
 
 router.post('/asignar_microciclo',
   handleInputErrors,
-  plan_Entrenamiento_Controller.relacion_plan_microciclo
+  plan_Entrenamiento_Controller.asignar_microciclo
 );
-
-
-
 
 router.put('/:id',
   validar_Plan_Entrenamiento_Body,
