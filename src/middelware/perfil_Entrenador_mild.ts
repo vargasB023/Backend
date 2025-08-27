@@ -18,8 +18,6 @@ export const validar_Perfil_Entrenador_Por_Id = async (req: Request,res: Respons
     })
     .run(req);
 
-    
-    
   const errors = validationResult(req);
   
   if (!errors.isEmpty()) {
@@ -29,32 +27,8 @@ export const validar_Perfil_Entrenador_Por_Id = async (req: Request,res: Respons
   next();
 }  
 
-export const validar_Perfil_Entrenador_Body = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  await body('ID_Entrenador')
-    .notEmpty().withMessage('El ID del entrenador es obligatorio')
-    .isInt({ gt: 0 }).withMessage('El ID del entrenador debe ser un número entero válido')
-    .custom(async (value, { req }) => {
-      const entrenador_Existente = await Entrenador.findByPk(value);
-      if (!entrenador_Existente) {
-        throw new Error('No existe un entrenador con ese ID');
-      }
-
-      // Si es creación (POST), valida que no exista un perfil ya creado
-      if (req.method === 'POST') {
-        const perfil_Existente = await Perfil_Entrenador.findOne({ where: { ID_Entrenador: value } });
-        if (perfil_Existente) {
-          throw new Error('Este entrenador ya tiene un perfil creado');
-        }
-      }
-
-      return true;
-    })
-    .run(req);
-
+export const validar_Perfil_Entrenador_Body = async (req: Request,res: Response,next: NextFunction) => {
+  
   await body('foto_Perfil')
     .optional()
     .isString().withMessage('La foto de perfil debe ser una cadena de texto')

@@ -62,8 +62,6 @@ export class Entrenador_controller {
     }
   };
 
- 
-
 
   static crear_Entrenador = async (req: Request, res: Response) => {
     try {
@@ -85,9 +83,6 @@ export class Entrenador_controller {
           return res.status(500).json({ mensaje: "Error al subir el archivo" });
         }
       }
-
-
-
 
       const entrenador = new Entrenador(req.body);
       const datosEntrenador = await entrenador.save();
@@ -115,9 +110,7 @@ export class Entrenador_controller {
       res.status(500).json({ mensaje: "Hubo un error al crear el entrenador" });
     }
   };
-
-
-
+  
   static actualizar_entrenador_Por_Id = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;

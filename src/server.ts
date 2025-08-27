@@ -23,7 +23,6 @@ import cronograma_Router from './router/Cronograma_Router'
 
 import fileUpload from 'express-fileupload'
 
-
 async function connectDB() {
   try {
     await db.authenticate(); // Verifica la conexión a la base de datos
