@@ -22,7 +22,7 @@ export class EvaluacionDeportiva_controller {
     }
   }
 
-  static crear_Evaluacion_Deportiva = async (req: Request, res: Response) => {
+  static crear_EvaluacionDeportiva = async (req: Request, res: Response) => {
       try {
         const evaluacion_Deportiva = new Evaluacion_Deportiva(req.body);
         await evaluacion_Deportiva.save();
