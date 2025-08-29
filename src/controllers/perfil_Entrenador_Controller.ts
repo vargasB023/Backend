@@ -73,11 +73,8 @@ static actualizar_Perfil_Entrenador_Por_Id = async (req: Request, res: Response)
           folder: "perfilEntrenador",
           resource_type: "image",
         });
-
-        // limpiar archivo temporal
         await fs.unlink(file.tempFilePath);
 
-        // agregar la URL de cloudinary al objeto de actualización
         dataToUpdate.foto_Perfil = resultado.secure_url;
       } catch (error) {
         console.error("Error al subir imagen a Cloudinary:", error);

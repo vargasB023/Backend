@@ -22,14 +22,16 @@ export class EvaluacionDeportiva_controller {
     }
   }
 
-  static crear_EvaluacionDeportiva = async (req: Request, res: Response) => {
-    try {
-      await Evaluacion_Deportiva.create(req.body);
-      res.status(201).json({ mensaje: 'Evaluación deportiva creada correctamente' });
-    } catch {
-      res.status(500).json({ error: 'Error al crear la evaluación deportiva' });
+  static crear_Evaluacion_Deportiva = async (req: Request, res: Response) => {
+      try {
+        const evaluacion_Deportiva = new Evaluacion_Deportiva(req.body);
+        await evaluacion_Deportiva.save();
+        res.status(201).json({ mensaje: 'La Evaluacion deportiva se ha registrado correctamente' });
+      } catch (error) {
+        res.status(500).json({ error: 'Hubo un error al registrar la Evaluacion deportiva ' });
+      }
     }
-  }
+
 
   static actualizar_EvaluacionDeportiva_Por_Id = async (req: Request, res: Response) => {
     try {

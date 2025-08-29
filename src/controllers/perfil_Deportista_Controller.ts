@@ -1,6 +1,8 @@
 import { Request, Response } from "express"
 import Perfil_Deportista from "../models/perfil_Deportista"
 import Equipo from "../models/equipo"
+import cloudinary from "../Config/cloudinary"
+import fs from "fs-extra";
 
 export class perfil_Deportista_Controller{
   
@@ -46,26 +48,45 @@ export class perfil_Deportista_Controller{
     }
   }
 
-  //ACTUALIZAR
+
   static actualizar_Perfil_Deportista_Por_Id = async (req: Request, res: Response) => {
-    try{
-      const { id } = req.params
-      const perfil_Deportista = await Perfil_Deportista.findByPk(id)
-      if (!perfil_Deportista){
-        const error = new Error ('Pefil del deportista no encontrado')
-        return res.status(404).json({ error: error.message })
+  try {
+    const { id } = req.params;
+    const perfil_Deportista = await Perfil_Deportista.findByPk(id);
+
+    if (!perfil_Deportista) {
+      return res.status(404).json({ error: "Perfil del deportista no encontrado" });
+    }
+
+    let dataToUpdate: any = { ...req.body };
+
+    if (req.files && (req.files as any).foto_Perfil) {
+      const file = (req.files as any).foto_Perfil;
+
+      try {
+        const resultado = await cloudinary.uploader.upload(file.tempFilePath, {
+          folder: "perfilDeportista",
+          resource_type: "image",
+        });
+
+        await fs.unlink(file.tempFilePath);
+
+        dataToUpdate.foto_Perfil = resultado.secure_url;
+      } catch (error) {
+        console.error("Error al subir imagen a Cloudinary:", error);
+        return res.status(500).json({ mensaje: "Error al subir la imagen" });
       }
-      //escribir los cambios del body 
-      await perfil_Deportista.update(req.body)
-      res.json('El perfil del deportista se ha actualizado correctamente')
-    }catch(error){
-      //console.log(error)
-      res.status(500).json({error: 'Hubo un error al actualizar el perfil del deportista'})
+    }
 
-    }  
+    await perfil_Deportista.update(dataToUpdate);
+
+    res.json({ mensaje: "El perfil del deportista se ha actualizado correctamente", perfil_Deportista });
+  } catch (error) {
+    console.error("Error en actualizar_Perfil_Deportista_Por_Id:", error);
+    res.status(500).json({ error: "Hubo un error al actualizar el perfil del deportista" });
   }
+};
 
-  //ELIMINAR
   static eliminar_Perfil_Deportista_Por_Id = async (req: Request, res: Response) =>{
     try{
       const { id } = req.params
