@@ -24,7 +24,8 @@ export class EvaluacionDeportiva_controller {
 
   static crear_EvaluacionDeportiva = async (req: Request, res: Response) => {
       try {
-        const evaluacion_Deportiva = new Evaluacion_Deportiva(req.body);
+        const evaluacion_Deportiva = await Evaluacion_Deportiva.create(req.body);
+
         await evaluacion_Deportiva.save();
         res.status(201).json({ mensaje: 'La Evaluacion deportiva se ha registrado correctamente' });
       } catch (error) {
