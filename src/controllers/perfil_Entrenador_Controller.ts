@@ -63,30 +63,20 @@ static traer_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) => {
         const error = new Error("Perfil del entrenador no encontrado");
         return res.status(404).json({ error: error.message });
       }
-
-      // SI EL USUARIO ENVÍA UNA IMAGEN
       if (req.files && (req.files as any).foto_Perfil) {
         const file = (req.files as any).foto_Perfil;
-
         try {
-          // Subir imagen a Cloudinary
           const resultado = await cloudinary.uploader.upload(file.tempFilePath, {
-            folder: "perfilEntrenador", // carpeta en Cloudinary
+            folder: "perfilEntrenador", 
             resource_type: "image",
           });
-
-          // Eliminar archivo temporal
           await fs.unlink(file.tempFilePath);
-
-          // Guardar URL en el body para actualizar en BD
           req.body.foto_Perfil = resultado.secure_url;
         } catch (error) {
           console.error("Error al subir imagen a Cloudinary:", error);
           return res.status(500).json({ mensaje: "Error al subir la imagen" });
         }
       }
-
-      // Actualizar datos del perfil
       await perfil_Entrenador.update(req.body);
       res.json("El perfil del entrenador se ha actualizado correctamente");
     } catch (error) {
@@ -96,7 +86,6 @@ static traer_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) => {
     }
   };
 
-
   static eliminar_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) =>{
     try{
       const { id } = req.params
@@ -105,11 +94,9 @@ static traer_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) => {
         const error = new Error('Registro de entrenador no encontrado')
         return res.status(404).json({ error: error.message })
       }
-      //escribir los cambios del body
       await perfil_Entrenador.destroy()
       res.json('El  perfil del entrenador se ha eliminado correctamente')
     } catch (error){
-      //console.log(error)
       res.status(500).json({error:'Hubo un error al eliminar el perfil del entrenador'})
     }
   }

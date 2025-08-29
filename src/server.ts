@@ -80,5 +80,6 @@ app.use('/api/evacluacion_Tecnica',evaluacion_Tecnica_Router)
 app.use('/api/evaluacion_Fisica',evaluacion_Fisica_Router)
 app.use('/api/cronograma',cronograma_Router)
 
+
 export default app;
 
