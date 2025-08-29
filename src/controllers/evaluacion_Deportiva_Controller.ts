@@ -24,15 +24,15 @@ export class EvaluacionDeportiva_controller {
 
   static crear_EvaluacionDeportiva = async (req: Request, res: Response) => {
       try {
+        console.log(" Body recibido en /api/evaluacion:", req.body);
         const evaluacion_Deportiva = await Evaluacion_Deportiva.create(req.body);
 
         await evaluacion_Deportiva.save();
         res.status(201).json({ mensaje: 'La Evaluacion deportiva se ha registrado correctamente' });
-      } catch (error) {
-        res.status(500).json({ error: 'Hubo un error al registrar la Evaluacion deportiva ' });
-      }
-    }
-
+      }catch (error) {
+  console.error("Error en crear_Evaluacion Deportiva:", error);
+  res.status(500).json({ error: 'Hubo un error al registrar la Evaluacion deportiva' });}
+}
 
   static actualizar_EvaluacionDeportiva_Por_Id = async (req: Request, res: Response) => {
     try {
