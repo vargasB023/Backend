@@ -54,37 +54,45 @@ static traer_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) => {
     }
   }
 
-   static actualizar_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const perfil_Entrenador = await Perfil_Entrenador.findByPk(id);
+static actualizar_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const perfil_Entrenador = await Perfil_Entrenador.findByPk(id);
 
-      if (!perfil_Entrenador) {
-        const error = new Error("Perfil del entrenador no encontrado");
-        return res.status(404).json({ error: error.message });
-      }
-      if (req.files && (req.files as any).foto_Perfil) {
-        const file = (req.files as any).foto_Perfil;
-        try {
-          const resultado = await cloudinary.uploader.upload(file.tempFilePath, {
-            folder: "perfilEntrenador", 
-            resource_type: "image",
-          });
-          await fs.unlink(file.tempFilePath);
-          req.body.foto_Perfil = resultado.secure_url;
-        } catch (error) {
-          console.error("Error al subir imagen a Cloudinary:", error);
-          return res.status(500).json({ mensaje: "Error al subir la imagen" });
-        }
-      }
-      await perfil_Entrenador.update(req.body);
-      res.json("El perfil del entrenador se ha actualizado correctamente");
-    } catch (error) {
-      res
-        .status(500)
-        .json({ error: "Hubo un error al actualizar el perfil del Entrenador" });
+    if (!perfil_Entrenador) {
+      return res.status(404).json({ error: "Perfil del entrenador no encontrado" });
     }
-  };
+
+    let dataToUpdate: any = { ...req.body };
+
+    if (req.files && (req.files as any).foto_Perfil) {
+      const file = (req.files as any).foto_Perfil;
+
+      try {
+        const resultado = await cloudinary.uploader.upload(file.tempFilePath, {
+          folder: "perfilEntrenador",
+          resource_type: "image",
+        });
+
+        // limpiar archivo temporal
+        await fs.unlink(file.tempFilePath);
+
+        // agregar la URL de cloudinary al objeto de actualización
+        dataToUpdate.foto_Perfil = resultado.secure_url;
+      } catch (error) {
+        console.error("Error al subir imagen a Cloudinary:", error);
+        return res.status(500).json({ mensaje: "Error al subir la imagen" });
+      }
+    }
+
+    await perfil_Entrenador.update(dataToUpdate);
+
+    res.json({ mensaje: "El perfil del entrenador se ha actualizado correctamente", perfil_Entrenador });
+  } catch (error) {
+    console.error("Error en actualizar_Perfil_Entrenador_Por_Id:", error);
+    res.status(500).json({ error: "Hubo un error al actualizar el perfil del Entrenador" });
+  }
+};
 
   static eliminar_Perfil_Entrenador_Por_Id = async (req: Request, res: Response) =>{
     try{
