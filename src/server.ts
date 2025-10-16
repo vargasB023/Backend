@@ -50,7 +50,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://backend-5gwv.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true  
 }));
