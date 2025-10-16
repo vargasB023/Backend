@@ -50,7 +50,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: 'https://backend-5gwv.onrender.com',
+  origin: 'https://frontend-jade-three-255yvtf0ev.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true  
 }));
