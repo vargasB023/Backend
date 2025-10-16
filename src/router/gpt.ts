@@ -96,14 +96,14 @@ router.post("/", async (req: Request, res: Response) => {
       entrenadoresSettled,
       equiposSettled
     ] = (await Promise.allSettled([
-      axios.get<Lesion[]>("https://backend-7sye.onrender.com/api/h_lesiones_antes"),
-      axios.get<Lesion[]>("https://backend-7sye.onrender.com/api/h_lesiones_despues"),
-      axios.get<Deportista[]>("https://backend-7sye.onrender.com/api/deportista/lesionados"),
-      axios.get<Plan[]>("https://backend-7sye.onrender.com/api/plan_de_entrenamiento"),
-      axios.get<Microciclo[]>("https://backend-7sye.onrender.com/api/microciclo"),
-      axios.get<Deportista[]>("https://backend-7sye.onrender.com/api/deportista"),
-      axios.get<Entrenador[]>("https://backend-7sye.onrender.com/api/entrenador"),
-      axios.get<Equipo[]>("https://backend-7sye.onrender.com/api/equipo")
+      axios.get<Lesion[]>("https://backend-5gwv.onrender.com/api/h_lesiones_antes"),
+      axios.get<Lesion[]>("https://backend-5gwv.onrender.com/api/h_lesiones_despues"),
+      axios.get<Deportista[]>("https://backend-5gwv.onrender.com/api/deportista/lesionados"),
+      axios.get<Plan[]>("https://backend-5gwv.onrender.com/api/plan_de_entrenamiento"),
+      axios.get<Microciclo[]>("https://backend-5gwv.onrender.com/api/microciclo"),
+      axios.get<Deportista[]>("https://backend-5gwv.onrender.com/api/deportista"),
+      axios.get<Entrenador[]>("https://backend-5gwv.onrender.com/api/entrenador"),
+      axios.get<Equipo[]>("https://backend-5gwv.onrender.com/api/equipo")
     ])) as [
       PromiseSettledResult<AxiosResponse<Lesion[]>>,
       PromiseSettledResult<AxiosResponse<Lesion[]>>,
