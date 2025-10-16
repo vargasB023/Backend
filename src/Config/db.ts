@@ -10,7 +10,7 @@ export const db = new Sequelize({
   host: process.env.DB_HOST as string,
   port: parseInt(process.env.DB_PORT as string, 10),
   dialect: 'mysql',
-  models: [__dirname + '/../models/**/*.js'],
+  models: [__dirname + '/../models/**/*.ts'],
   logging: false,
   pool: {
     max: 5,

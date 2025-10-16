@@ -50,7 +50,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: 'https://frontend-jade-three-255yvtf0ev.vercel.app',
+  origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true  
 }));
