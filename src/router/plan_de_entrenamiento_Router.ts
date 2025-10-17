@@ -39,7 +39,6 @@ router.get('/entrenador/:ID_Entrenador',
 router.get("/completos",
    plan_Entrenamiento_Controller.traer_Plan_Completo);
 
-
 router.put('/:id',
   validar_Plan_Entrenamiento_Body,
   handleInputErrors,
