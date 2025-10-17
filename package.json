@@ -22,6 +22,7 @@
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
+    "dotenv-expand": "^12.0.3",
     "express": "^5.1.0",
     "express-fileupload": "^1.5.2",
     "express-validator": "^7.2.1",

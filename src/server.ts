@@ -1,4 +1,5 @@
 import express from 'express';
+import "./Config/env.config";
 import colors from 'colors';
 import morgan from 'morgan';
 import {db} from './Config/db';
@@ -48,6 +49,7 @@ async function connectDB() {
 
 connectDB();
 const app = express();
+
 
 app.use(cors({
   origin: [
